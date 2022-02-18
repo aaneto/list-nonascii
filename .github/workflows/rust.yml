@@ -17,3 +17,6 @@ jobs:
     steps:
     - name: Rust Release binary
       uses: rust-build/rust-build.action@v1.2.6
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RUSTTARGET: x86_64-unknown-linux-musl
