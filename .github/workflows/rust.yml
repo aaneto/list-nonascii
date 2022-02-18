@@ -1,22 +1,64 @@
-name: Rust
+name: Release
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-env:
-  CARGO_TERM_COLOR: always
+  create:
+    tags:
 
 jobs:
-  build:
-
+  release-ubuntu:
     runs-on: ubuntu-latest
+    
+    steps:
+    - uses: hecrj/setup-rust-action@master
+      with:
+        rust-version: stable
+
+    - uses: actions/checkout@v1
+    - name: Build
+      run: cargo build --release
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/release/celtic_names
+        asset_name: ubuntu-celtic-names
+        tag: ${{ github.event.ref }}
+      
+  release-windows:
+    runs-on: windows-latest
 
     steps:
-    - name: Rust Release binary
-      uses: rust-build/rust-build.action@v1.2.6
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        RUSTTARGET: x86_64-unknown-linux-musl
+    - uses: hecrj/setup-rust-action@master
+      with:
+        rust-version: stable
+
+    - uses: actions/checkout@v1
+
+    - name: Build
+      run: cargo build --release
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/release/celtic_names.exe
+        asset_name: windows-celtic-names.exe
+        tag: ${{ github.event.ref }}
+  
+  release-macos:
+    runs-on: macos-latest
+    steps:
+    - uses: hecrj/setup-rust-action@master
+      with:
+        rust-version: stable
+    - uses: actions/checkout@v1
+    - name: Build
+      run: cargo build --release
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/release/celtic_names
+        asset_name: macos-celtic-names
+        tag: ${{ github.event.ref }}
