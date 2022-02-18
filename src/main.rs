@@ -10,9 +10,12 @@ fn main() {
             chars.insert(ch);
         }
     }
-    
+    let mut line = 0;
     for ch in chars {
         let char_num = ch as u32;
-        println!("{ch} --> {char_num:0>4x}");
+        println!("Line {line}: {ch} --> {char_num:0>4x}");
+        if ch == '\n' {
+            line += 1;
+        }
     }
 }
