@@ -19,8 +19,8 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/celtic_names
-        asset_name: ubuntu-celtic-names
+        file: target/release/list-nonascii
+        asset_name: ubuntu-list-nonascii
         tag: ${{ github.event.ref }}
       
   release-windows:
@@ -40,8 +40,8 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/celtic_names.exe
-        asset_name: windows-celtic-names.exe
+        file: target/release/list-nonascii.exe
+        asset_name: windows-list-nonascii.exe
         tag: ${{ github.event.ref }}
   
   release-macos:
@@ -57,6 +57,6 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/celtic_names
-        asset_name: macos-celtic-names
+        file: target/release/list-nonascii
+        asset_name: macos-list-nonascii
         tag: ${{ github.event.ref }}
